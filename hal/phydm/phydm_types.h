@@ -163,6 +163,12 @@ enum rt_spinlock_type {
 		typedef short					s16, *s16 *;
 		typedef long					s32, *s32 *;
 		typedef long long				s64, *s64 *;
+		
+		#if defined (LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0))
+		typedef struct legacy_timer_emu		RT_TIMER, *PRT_TIMER;
+		#else
+		typedef struct timer_list		RT_TIMER, *PRT_TIMER;
+		#endif
 	#endif
 
 
@@ -234,6 +240,12 @@ enum rt_spinlock_type {
 		#define	ODM_ENDIAN_TYPE			ODM_ENDIAN_LITTLE
 	#elif defined (CONFIG_BIG_ENDIAN)
 		#define	ODM_ENDIAN_TYPE			ODM_ENDIAN_BIG
+	#endif
+
+	#if defined (LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0))
+	typedef struct legacy_timer_emu		RT_TIMER, *PRT_TIMER;
+	#else
+	typedef struct timer_list		RT_TIMER, *PRT_TIMER;
 	#endif
 
 	#define	boolean	bool
