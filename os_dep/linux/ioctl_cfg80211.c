@@ -766,7 +766,7 @@ check_bss:
 		struct ieee80211_channel *notify_channel;
 		u32 freq;
 		u16 channel = cur_network->network.Configuration.DSConfig;
-#if LINUX_VERSION_CODE > KERNEL_VERSION(4, 11, 9)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
                 struct cfg80211_roam_info roam_info = {};
 #endif
 
@@ -775,7 +775,7 @@ check_bss:
 		#endif
 
 		RTW_INFO(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
-#if LINUX_VERSION_CODE > KERNEL_VERSION(4, 11, 9)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
                 roam_info.channel = notify_channel;
                 roam_info.bssid = cur_network->network.MacAddress;
                 roam_info.req_ie = pmlmepriv->assoc_req + sizeof(struct rtw_ieee80211_hdr_3addr) + 2;
@@ -6834,7 +6834,7 @@ static void rtw_cfg80211_preinit_wiphy(_adapter *adapter, struct wiphy *wiphy)
 #endif
 
 #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
-#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 11, 9)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0)
 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
 #endif
 #ifdef CONFIG_PNO_SUPPORT
